@@ -8,7 +8,7 @@ resource "helm_release" "aws_load_balancer_controller" {
 
   repository = "https://aws.github.io/eks-charts"
   chart      = "aws-load-balancer-controller"
-  version    = "1.6.2"
+  version    = "1.6.2" // targets aws-load-balancer-controller@2.6.2
 
   set {
     name  = "clusterName"
@@ -22,11 +22,11 @@ resource "helm_release" "aws_load_balancer_controller" {
 
   set {
     name  = "serviceAccount.name"
-    value = kubernetes_service_account.example.metadata[0].name
+    value = kubernetes_service_account.aws_load_balancer_controller_sa.metadata[0].name
   }
 }
 
-resource "kubernetes_service_account" "example" {
+resource "kubernetes_service_account" "aws_load_balancer_controller_sa" {
   metadata {
     name      = "aws-load-balancer-controller"
     namespace = "kube-system"
@@ -51,14 +51,14 @@ resource "aws_iam_role" "aws_load_balancer_controller_sa_role" {
         "Condition" : {
           "StringEquals" : {
             "${module.eks.oidc_provider}:aud" : "sts.amazonaws.com",
-            "${module.eks.oidc_provider}:sub" : "system:serviceaccount:kube-config:aws-load-balancer-controller"
+            "${module.eks.oidc_provider}:sub" : "system:serviceaccount:kube-system:aws-load-balancer-controller"
           }
         }
       }
     ]
   })
 
-  # Source = https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.5.4/docs/install/iam_policy.json
+  # Source = https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/v2.6.2/docs/install/iam_policy.json
   inline_policy {
     name = "AWSLoadBalancerControllerIAMPolicy"
     policy = jsonencode({
