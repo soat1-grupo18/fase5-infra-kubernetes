@@ -1,0 +1,14 @@
+name: Terraform plan & apply, build Docker image and deploy to Amazon ECS
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    uses: soat1-grupo18/fase3-reusable-github-workflows/blob/main/.github/workflows/aws-terraform.yml@main
+    with:
+      aws-region: us-east-1
+      terraform-directory-path: .
+    secrets: inherit

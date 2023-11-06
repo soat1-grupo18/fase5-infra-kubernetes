@@ -2,7 +2,7 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 19.0"
 
-  cluster_name    = "fiap-cluster"
+  cluster_name    = var.eks_cluster_name
   cluster_version = "1.27"
 
   vpc_id     = module.vpc.vpc_id
@@ -14,8 +14,8 @@ module "eks" {
   eks_managed_node_groups = {
     fiap = {
       min_size     = 1
-      max_size     = 10
-      desired_size = 5
+      max_size     = 5
+      desired_size = 3
 
       instance_types = ["t3.micro"]
       #   capacity_type  = "SPOT"
