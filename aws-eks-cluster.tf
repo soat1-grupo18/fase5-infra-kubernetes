@@ -11,6 +11,11 @@ module "eks" {
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
 
+  kms_key_administrators = [
+    "arn:aws:iam::289389227463:user/og-fiap-soat",
+    "arn:aws:iam::289389227463:user/github"
+  ]
+
   eks_managed_node_groups = {
     fiap = {
       min_size     = 1
