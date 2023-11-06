@@ -1,33 +1,25 @@
-module "eks" {
-  source  = "terraform-aws-modules/eks/aws"
-  version = "~> 19.0"
+resource "aws_eks_cluster" "this" {
+  name     = var.eks_cluster_name
+  version  = "1.28"
+  role_arn = aws_iam_role.eks_cluster_role.arn
 
-  cluster_name    = var.eks_cluster_name
-  cluster_version = "1.27"
+  enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
 
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
-
-  cluster_endpoint_private_access = true
-  cluster_endpoint_public_access  = true
-
-  kms_key_administrators = [
-    "arn:aws:iam::289389227463:user/og-fiap-soat",
-    "arn:aws:iam::289389227463:user/github"
-  ]
-
-  eks_managed_node_groups = {
-    fiap = {
-      min_size     = 1
-      max_size     = 5
-      desired_size = 3
-
-      instance_types = ["t3.micro"]
-      #   capacity_type  = "SPOT"
-    }
+  vpc_config {
+    subnet_ids              = module.vpc.private_subnets
+    endpoint_private_access = true
+    endpoint_public_access  = true
   }
+
+  # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
+  # Otherwise, EKS will not be able to properly delete EKS managed EC2 infrastructure such as Security Groups.
+  depends_on = [
+    aws_cloudwatch_log_group.eks_cluster,
+    aws_iam_role_policy_attachment.eks_cluster_role_amazon_eks_cluster_policy,
+    aws_iam_role_policy_attachment.eks_cluster_role_amazon_eks_vpc_resource_controller,
+  ]
 }
 
 data "aws_eks_cluster_auth" "this" {
-  name = module.eks.cluster_name
+  name = aws_eks_cluster.this.name
 }

@@ -12,3 +12,13 @@ variable "eks_cluster_name" {
   type    = string
   default = "fiap-cluster"
 }
+
+variable "eks_ingress_http_port" {
+  type    = number
+  default = 32080
+}
+
+variable "eks_ingress_https_port" {
+  type    = number
+  default = 32443
+}
