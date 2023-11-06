@@ -15,11 +15,13 @@ module "vpc" {
   #   "kubernetes.io/cluster/${var.eks_cluster_name}" : "owned"
   # }
 
-  # Deprecated = AWS Load Balancer Controller needs it.
-  # private_subnet_tags = {
-  #   "kubernetes.io/role/internal-elb" : "1"
-  #   "kubernetes.io/cluster/${var.eks_cluster_name}" : "owned"
-  # }
+
+  private_subnet_tags = {
+    # Deprecated = AWS Load Balancer Controller needs it.
+    # "kubernetes.io/role/internal-elb" : "1"
+    # "kubernetes.io/cluster/${var.eks_cluster_name}" : "owned"
+    "fiap-private-subnet" = "true"
+  }
 
   enable_nat_gateway = true
   single_nat_gateway = true # optimizing costs instead of high availability
