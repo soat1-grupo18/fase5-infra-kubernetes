@@ -10,5 +10,6 @@ jobs:
     uses: soat1-grupo18/fase3-reusable-github-workflows/.github/workflows/aws-terraform.yml@main
     with:
       aws-region: us-east-1
-      terraform-directory-path: .
+      terraform-directory-path: src
+      terraform-version: 1.6.3
     secrets: inherit

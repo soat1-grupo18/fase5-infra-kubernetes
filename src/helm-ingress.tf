@@ -1,4 +1,6 @@
 resource "helm_release" "nginx_ingress" {
+  provider = helm.fiap-cluster
+
   name      = "ingress-nginx"
   namespace = "kube-system"
 
