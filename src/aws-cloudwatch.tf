@@ -4,8 +4,3 @@ resource "aws_cloudwatch_log_group" "eks_cluster" {
   name              = "/aws/eks/${var.eks_cluster_name}/cluster"
   retention_in_days = 30
 }
-
-resource "aws_cloudwatch_log_group" "api_gateway" {
-  name              = "API-Gateway-Execution-Logs_${aws_api_gateway_rest_api.this.id}/latest"
-  retention_in_days = 30
-}
