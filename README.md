@@ -1,5 +1,6 @@
 # fase3-infra-kubernetes
-Infra Kubernetes com Terraform
+
+Infra Kubernetes com Terraform.
 
 - [Tech Challenge](#tech-challenge)
   - [Alunos](#alunos)
