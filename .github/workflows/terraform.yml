@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+permissions:
+      id-token: write
+      contents: read
+
 jobs:
   terraform:
     uses: soat1-grupo18/fase3-reusable-github-workflows/.github/workflows/aws-terraform.yml@main
