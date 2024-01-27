@@ -15,4 +15,5 @@ jobs:
     with:
       aws-region: us-east-1
       terraform-directory-path: src
-      terraform-version: 1.6.3
+      terraform-version: 1.7.0
+  
