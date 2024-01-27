@@ -2,14 +2,15 @@
 
 Infra Kubernetes com Terraform.
 
-- [Tech Challenge](#tech-challenge)
+- [fase3-infra-kubernetes](#fase3-infra-kubernetes)
+  - [Tech Challenge](#tech-challenge)
   - [Alunos](#alunos)
 
 ## Tech Challenge
 
 Projeto realizado durante o terceiro módulo da Pós Tech Software Architecture da FIAP.
 
-### Alunos
+## Alunos
 
 |                            Nome |     RM     |
 | ------------------------------: | :--------: |
