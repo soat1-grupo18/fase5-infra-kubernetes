@@ -12,13 +12,14 @@ resource "aws_eks_node_group" "this" {
   subnet_ids      = module.vpc.private_subnets
 
   instance_types = [
-    "t3.micro"
+    # "t3.micro"
+    "t3.medium"
   ]
 
   scaling_config {
-    desired_size = 4
+    desired_size = 2
     min_size     = 1
-    max_size     = 5
+    max_size     = 3
   }
 
   update_config {
