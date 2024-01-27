@@ -28,3 +28,18 @@ resource "aws_eks_cluster" "this" {
 data "aws_eks_cluster_auth" "this" {
   name = aws_eks_cluster.this.name
 }
+
+resource "aws_eks_access_entry" "sysadm" {
+  cluster_name  = aws_eks_cluster.this.name
+  principal_arn = "arn:aws:iam::289389227463:user/og-fiap-soat"
+}
+
+resource "aws_eks_access_policy_association" "sysadm" {
+  cluster_name  = aws_eks_cluster.this.name
+  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+  principal_arn = "arn:aws:iam::289389227463:user/og-fiap-soat"
+
+  access_scope {
+    type = "cluster"
+  }
+}
