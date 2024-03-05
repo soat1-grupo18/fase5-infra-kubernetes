@@ -21,8 +21,17 @@ docker-compose up
 
 Estamos utilizando o SQS para a coreografia de eventos entre os microsserviços, e o Localstack permite testarmos tudo localmente.
 
+Exemplos de comandos para criar e enviar mensagens para a fila SQS localmente com o LocalStack:
+
+```bash
+aws --endpoint http://localhost:4566 --profile localstack sqs create-queue --queue-name pedidoRecebido
+aws --endpoint http://localhost:4566 --profile localstack sqs send-message --queue-url http://localhost:4566/000000000000/pedidoRecebido --message-body "Hello World SQS!!!"
+aws --endpoint http://localhost:4566 --profile localstack sqs receive-message --queue-url http://localhost:4566/000000000000/pedidoRecebido
+```
+
 Referências
 
+- https://www.baeldung.com/java-spring-cloud-aws-v3-intro
 - https://medium.com/@anchan.ashwithabg95/using-localstack-sns-and-sqs-for-devbox-testing-fa09de5e3bbb
 - https://docs.localstack.cloud/user-guide/aws/sqs/
 - https://dev.to/flflima/rodando-sqs-localmente-com-localstack-3nap
