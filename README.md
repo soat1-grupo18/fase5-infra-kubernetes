@@ -29,6 +29,15 @@ aws --endpoint http://localhost:4566 --profile localstack sqs send-message --que
 aws --endpoint http://localhost:4566 --profile localstack sqs receive-message --queue-url http://localhost:4566/000000000000/pedidoRecebido
 ```
 
+Comandos para a configuração do SNS e do SQS:
+```bash
+aws --endpoint http://localhost:4566 --profile localstack sns create-topic --name ms-pedido
+aws --endpoint http://localhost:4566 --profile localstack sqs create-queue --queue-name ms-pagamento-evento-pedido-recebido
+aws --endpoint http://localhost:4566 --profile localstack sns subscribe --topic-arn arn:aws:sns:us-east-1:000000000000:ms-pedido --protocol sqs --notification-endpoint arn:aws:sqs:us-east-1:000000000000:ms-pagamento-evento-pedido-recebido --attributes '{ \"RawMessageDelivery\": \"true\" }'
+aws --endpoint http://localhost:4566 --profile localstack sqs create-queue --queue-name ms-producao-evento-pedido-recebido
+aws --endpoint http://localhost:4566 --profile localstack sns subscribe --topic-arn arn:aws:sns:us-east-1:000000000000:ms-pedido --protocol sqs --notification-endpoint arn:aws:sqs:us-east-1:000000000000:ms-producao-evento-pedido-recebido --attributes '{ \"RawMessageDelivery\": \"true\" }'
+```
+
 Referências
 
 - https://www.baeldung.com/java-spring-cloud-aws-v3-intro
